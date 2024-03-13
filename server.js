@@ -20,11 +20,45 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-.main {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 6rem;
-  min-height: calc(100vh - 7rem);
+const {
+    parse
+} = require('node:url');
+const {
+    createServer
+} = require('@egomobile/http-server');
+const next = require('next');
+
+const dev = process.env.NODE_ENV?.toLowerCase().trim() === "development";
+const hostname = '0.0.0.0';
+const port = 3000;
+
+async function main() {
+    const app = next({ dev, hostname, port });
+    await app.prepare();
+
+    const handle = app.getRequestHandler();
+
+    const server = createServer();
+
+    const middlewares = [];
+
+    // any method ...
+    server.all(
+        () => true, // ... and any path
+        middlewares,
+        async (request, response) => {
+            request.appRoot = __dirname;
+
+            await handle(request, response, parse(request.url, true));
+        },
+    );
+
+    await server.listen(port);
+    console.info(`ℹ️ Next.js instance now running on port ${port} ...`);
 }
+
+main().catch((ex) => {
+    console.error('🔥 [UNHANDLED EXCEPTION]', ex);
+
+    process.exit(1);
+});
