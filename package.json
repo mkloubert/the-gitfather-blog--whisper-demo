@@ -1,0 +1,25 @@
+{
+    "name": "tgf-whisper-demo1",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "next": "14.1.3",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "sass": "1.71.1"
+    },
+    "devDependencies": {
+        "@types/node": "18.19.23",
+        "@types/react": "18.2.65",
+        "@types/react-dom": "18.2.21",
+        "eslint": "8.57.0",
+        "eslint-config-next": "14.1.3",
+        "typescript": "^5"
+    }
+}
