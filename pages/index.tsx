@@ -54,9 +54,7 @@ async function recordAudio(signal: AbortSignal, onData: (data: Blob) => any) {
     const nextTick = () => {
         setTimeout(() => {
             if (signal.aborted) {
-                if (mediaRecorder.state !== "inactive") {
-                    mediaRecorder.stop();
-                }
+                mediaRecorder.stop();
             } else {
                 nextTick();
             }
